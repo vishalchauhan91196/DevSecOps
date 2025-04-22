@@ -7,6 +7,16 @@ on:
     branches: [master]
 
 jobs:
+  security-scan-gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install & Run Gitleaks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gitleaks
+          gitleaks detect --source . --report-format json --report-path=gitleaks-report.json
+
   build:
     runs-on: ubuntu-latest
     steps:
